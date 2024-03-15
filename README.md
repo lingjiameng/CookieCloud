@@ -18,6 +18,12 @@ Windows双击运行打包出的exe程序即可启动
 - `python 3.11.8`
 - `requirements.txt`
 
+```
+pip install -r requirements.txt
+
+python main.py
+```
+
 ## 参考项目地址
 
 - [easychen/CookieCloud](https://github.com/easychen/CookieCloud)
