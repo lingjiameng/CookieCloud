@@ -1,21 +1,16 @@
-import gzip
-from typing import Callable, Union, Optional, Dict, Any
+import os
 
-from fastapi import APIRouter, FastAPI, Request, Response
-from fastapi.routing import APIRoute
-from pydantic import BaseModel
-import urllib.request
-import json
+from fastapi import FastAPI
+from uvicorn import Config, Server
 
-import uvicorn
-from uvicorn import Config
 import cookieserver
 
 App = FastAPI()
 
-App.include_router(cookieserver.router, prefix="/cookiecloud")
+App.include_router(cookieserver.router, prefix=cookieserver.ROOT)
 
 if __name__ == '__main__':
-    Server = uvicorn.Server(
-        Config(App, host="0.0.0.0", port=10375, reload=False, workers=2))
+    COOKIE_CLOUD_PORT = int(os.getenv('COOKIE_CLOUD_PORT', 10375))
+    Server = Server(
+        Config(App, host="0.0.0.0", port=COOKIE_CLOUD_PORT, reload=False))
     Server.run()

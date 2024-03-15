@@ -1,18 +1,21 @@
+import base64
 import gzip
-from typing import Annotated, Callable, Union, Optional, Dict, Any
-
-from fastapi import APIRouter, Body, FastAPI, HTTPException, Path, Query, Request, Response
-from fastapi.responses import PlainTextResponse, JSONResponse
-from fastapi.routing import APIRoute
-from pydantic import BaseModel
-import urllib.request
 import json
 import os
+import pathlib
+from hashlib import md5
+from typing import Annotated, Any, Callable, Dict, Optional, Union
 
 from Crypto import Random
 from Crypto.Cipher import AES
-import base64
-from hashlib import md5
+from fastapi import APIRouter, HTTPException, Path, Query, Request, Response
+from fastapi.responses import PlainTextResponse
+from fastapi.routing import APIRoute
+from pydantic import BaseModel
+
+ROOT = "/cookiecloud"
+
+PATH_ROOT = pathlib.Path(__file__).parents[0] / "cookie_data"
 
 
 def bytes_to_key(data: bytes, salt: bytes, output=48) -> bytes:
@@ -117,10 +120,6 @@ class Message(BaseModel):
     test: Union[str, None] = None
     encrypted: Union[str, None] = None
 
-
-ROOT = "/cookiecloud"
-
-PATH_ROOT = os.path.join(os.path.dirname(__file__), "/cookie_data")
 
 if not os.path.exists(PATH_ROOT):
     os.makedirs(PATH_ROOT)

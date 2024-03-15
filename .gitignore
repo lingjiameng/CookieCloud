@@ -160,6 +160,8 @@ cython_debug/
 #.idea/
 
 ##
+.vscode
 CookieCloud-master
 data
 test
+cookie_data
